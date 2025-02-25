@@ -1,16 +1,16 @@
 const fs = require("fs");
 
-//Synchronous way of writing a file
-// fs.writeFileSync("./file.txt" ,"This is a file created by Node.js");
+//Synchronous way of writing a file___Blocking code
+fs.writeFileSync("./file.txt" ,"This is a file created by Node.js");
 
-//async way of writing a file
-// fs.writeFile("./file.txt", "This is a file created by Node.js", (err) => {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log("File created successfully");
-//     }
-// });
+//async way of writing a file____Non-blocking code
+fs.writeFile("./file.txt", "This is a file created by Node.js", (err) => {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log("File created successfully");
+    }
+});
 //synchrounous way of reading a file
 // const result = fs.readFileSync("./contacts.txt", "utf-8")
 // console.log(result);
