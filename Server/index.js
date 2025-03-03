@@ -3,14 +3,15 @@ const fs = require("fs");
 const url = require("url");
 
 const myServer = http.createServer((req, res) => {
-	const log = `${Date.now()} : ${req.method} ${req.url} New Request Received\n`;
+	const method = req.method;
+	const log = `${Date.now()} : ${method} ${req.url} New Request Received\n`;
 	const myUrl = url.parse(req.url, true);
 	console.log(myUrl);
 
 	// Handling routes properly
 	switch (myUrl.pathname) {
 		case "/":
-			if (req.method == "GET") res.end("Home Page");
+			if (method == "GET") res.end("Home Page");
 			break;
 		case "/about":
 			const username = myUrl.query.myname || "Guest";
@@ -24,8 +25,8 @@ const myServer = http.createServer((req, res) => {
 			res.end("Here are your results for: " + search);
 			break;
 		case "/signup":
-			if (req.method == "GET") res.end("Signup Page");
-			else if (req.method == "POST")
+			if (method == "GET") res.end("Signup Page");
+			else if (method == "POST")
 				// DB Query to save user data
 				res.end("Signup Successful");
 			break;
@@ -44,3 +45,14 @@ const myServer = http.createServer((req, res) => {
 myServer.listen(8000, () => {
 	console.log("Server is running on port 8000");
 });
+
+// const http = require("http");
+
+// const server = http.createServer((req, res) => {
+// 	res.writeHead(200, { "Content-Type": "text/html" });
+// 	res.end("Hello World");
+// });
+
+// server.listen(5000, () => {
+// 	console.log("Server is running on port 5000");
+// });
