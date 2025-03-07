@@ -3,7 +3,6 @@ const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
 
-
 // Application-level middleware
 app.use((req, res, next) => {
 	console.log("Application-level middleware.");
@@ -14,9 +13,6 @@ app.use((req, res, next) => {
 });
 
 // Route handler for the root URL
-app.get("/application", (req, res) => {
-	res.send("Application Middleware!");
-});
 
 // Router Level Middleware
 const router = express.Router();
@@ -33,10 +29,6 @@ router.get("/", (req, res) => {
 });
 
 app.use("/router", router); // Apply router middleware
-
-app.listen(3000, () => {
-	console.log("The server is running on port 3000.");
-});
 
 app.get("/error", (req, res) => {
 	throw new Error("Something went wrong!"); // Simulating an error
@@ -55,13 +47,17 @@ app.post("/user", (req, res) => {
 	res.send("User data received");
 });
 
-
-
-
-
 app.use(morgan("dev")); // Logs HTTP requests
 app.use(cors()); // Enables Cross-Origin Resource Sharing
 
 app.get("/morgan", (req, res) => {
-  res.send("Hello, Morgan  Middleware!");
+	res.send("Hello, Morgan  Middleware!");
+});
+
+app.get("/application", (req, res) => {
+	res.send("Application Middleware!");
+});
+
+app.listen(3000, () => {
+	console.log("The server is running on port 3000.");
 });
