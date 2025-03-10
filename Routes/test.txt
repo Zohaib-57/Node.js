@@ -1,0 +1,116 @@
+API Testing with Postman - Authentication & Authorization
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDE2NDg5NzgsImV4cCI6MTc0MTY1MjU3OH0.bQAsGzt-XbYcGzYGB59QIEkeftEjaJrC4PZz4LS1hzY"
+}
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDE2NDkxODQsImV4cCI6MTc0MTY1Mjc4NH0.gwUwfyVGTSplco17h205PCB9GX0ZXhgQJnBZcyepRyY
+
+Step 1: Start the Server
+* Run the following command in your terminal: 
+* node server.js
+
+
+->Server should start running successfully.
+
+Step 2: Register a New User (Public Route)
+* Method: POST
+* URL: http://localhost:5000/register
+* Headers: 
+o Content-Type: application/json
+* Body (JSON): 
+ {
+   "username": "john",
+   "password": "12345",
+   "role": "admin"
+ }
+* Expected Response: 
+* {
+*   "message": "User registered successfully!"
+* }
+
+
+
+Step 3: Login & Get JWT Token (Public Route)
+* Method: POST
+* URL: http://localhost:5000/login
+* Headers: 
+o Content-Type: application/json
+* Body (JSON): 
+* {
+*   "username": "john",
+*   "password": "12345"
+* }
+* Expected Response: 
+* {
+*   "token": "your_jwt_token_here"
+* }
+* Action: Copy the token for use in subsequent requests.
+
+
+
+
+Step 4: Access Profile (Protected Route)
+* Method: GET
+* URL: http://localhost:5000/user/profile
+* Headers: 
+o Authorization: Bearer your_jwt_token_here
+* Expected Response: 
+* {
+*   "message": "Welcome, john"
+* }
+
+
+
+
+Step 5: Access Admin Dashboard (Private Route)
+* Method: GET
+* URL: http://localhost:5000/admin/dashboard
+* Headers: 
+o Authorization: Bearer your_jwt_token_here
+* Expected Response: 
+* {
+*   "message": "Welcome to Admin Dashboard"
+* }
+
+
+
+
+Step 6: Error Scenarios
+Error: No Token Provided
+* Method: GET
+* URL: http://localhost:5000/user/profile
+* Headers: ? No Token
+* Expected Response: 
+* {
+*   "error": "Access Denied. No token provided"
+* }
+
+Error: Invalid Token
+* Method: GET
+* URL: http://localhost:5000/user/profile
+* Headers: 
+o Authorization: Bearer invalid_token_here
+* Expected Response: 
+* {
+*   "error": "Invalid Token"
+* }
+
+Error: Not an Admin User
+* Method: GET
+* URL: http://localhost:5000/admin/dashboard
+* Headers: 
+o Authorization: Bearer non_admin_user_token
+* Expected Response: 
+* {
+*   "error": "Forbidden: You don�t have permission"
+* }
+
+
+
+
+Next Steps
+* Implement MongoDB for persistent user storage.
+* Enhance security with password hashing (bcrypt.js).
+* Improve error handling and response consistency.
+
+
